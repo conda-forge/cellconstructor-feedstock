@@ -18,6 +18,7 @@ requirements:
   build:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
     - llvm-openmp  # [osx]
     - libgomp      # [linux]
   host:
