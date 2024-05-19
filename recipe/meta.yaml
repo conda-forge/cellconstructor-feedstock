@@ -11,13 +11,14 @@ source:
 
 build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 2
+  number: 3
   skip: true  # [not linux]
 
 requirements:
   build:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - llvm-openmp  # [osx]
     - libgomp      # [linux]
   host:
@@ -30,7 +31,6 @@ requirements:
     - liblapack
   run:
     - python
-    - {{ pin_compatible('numpy') }}
 
 test:
   imports:
