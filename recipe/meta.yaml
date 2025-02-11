@@ -6,18 +6,19 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/CellConstructor-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/CellConstructor-{{ version }}.tar.gz
   sha256: e27d990af12ef5954b5d2d670a2ea9f59dddab9643256293392c6095e6208261
 
 build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 2
+  number: 3
   skip: true  # [not linux]
 
 requirements:
   build:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - llvm-openmp  # [osx]
     - libgomp      # [linux]
   host:
@@ -30,7 +31,6 @@ requirements:
     - liblapack
   run:
     - python
-    - {{ pin_compatible('numpy') }}
 
 test:
   imports:
