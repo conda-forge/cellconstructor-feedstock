@@ -27,6 +27,7 @@ requirements:
     - ase
     - scipy
     - pip
+    - meson-python
     - libblas
     - liblapack
   run:
