@@ -1,23 +1,24 @@
 {% set name = "cellconstructor" %}
-{% set version = "1.4.1" %}
+{% set version = "1.5.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/CellConstructor-{{ version }}.tar.gz
-  sha256: e27d990af12ef5954b5d2d670a2ea9f59dddab9643256293392c6095e6208261
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 19ba46a35bb79b5148afb41d6395fb99bc4124e2dfdd54072848bdbbd33fc882
 
 build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 2
+  number: 0
   skip: true  # [not linux]
 
 requirements:
   build:
     - {{ compiler('fortran') }}
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - llvm-openmp  # [osx]
     - libgomp      # [linux]
   host:
@@ -26,9 +27,13 @@ requirements:
     - ase
     - scipy
     - pip
+    - meson-python
+    - pkgconfig
     - libblas
     - liblapack
   run:
+    - ase
+    - scipy
     - python
     - {{ pin_compatible('numpy') }}
 
