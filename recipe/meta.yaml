@@ -1,5 +1,5 @@
 {% set name = "cellconstructor" %}
-{% set version = "1.6.0" %}
+{% set version = "1.6.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: a0d20f70df9b533cc354bda595a2264057246cf213019f0aae77778781eab6c0
+  sha256: e003cac2d940a9df6a833685ed3dcd08aea33dabd51f74bef94628693f3cceb9
 
 build:
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
