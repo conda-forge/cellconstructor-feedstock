@@ -1,0 +1,59 @@
+schema_version: 1
+
+context:
+  name: cellconstructor
+  version: "1.6.2"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+  sha256: 271bf7a8ac24094d5c9a2cedc4c4c35b242e2cbf8687f236c4b3df1fac1e4868
+
+build:
+  number: 1
+  skip: not linux
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  build:
+    - ${{ compiler('fortran') }}
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+    - if: osx
+      then: llvm-openmp
+    - if: linux
+      then: libgomp
+  host:
+    - python
+    - numpy
+    - ase
+    - scipy
+    - pip
+    - meson-python
+    - pkgconfig
+    - libblas
+    - liblapack
+  run:
+    - ase
+    - scipy
+    - python
+    - ${{ pin_compatible('numpy') }}
+
+tests:
+  - python:
+      imports:
+        - cellconstructor
+      pip_check: true
+
+about:
+  summary: Python utilities that is interfaced with ASE for atomic crystal analysis
+  license: GPL-3.0-or-later
+  license_file: LICENSE.md
+  homepage: https://github.com/mesonepigreco/CellConstructor
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
